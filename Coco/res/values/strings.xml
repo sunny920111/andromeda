@@ -8,5 +8,14 @@
     <string name="demo_external_activity">Demo External Activity</string>
     <string name="dummy_section_text">Section %1d is just a dummy section. </string>
     <string name="demo_collection">Demo collection  </string>
+    <string name="title">Coco Application</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="settingDateRangeText">기간설정</string>
+    <string name="search_button">search</string>
+    <string name="login_title_text">This is Co Co world</string>
+    <string name="login_id_textfield">id</string>
+    <string name="login_button">로그인</string>
+    <string name="register_button">번호 인증</string>
 
 </resources>
