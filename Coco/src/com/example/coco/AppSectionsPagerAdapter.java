@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
+	//CocoActivity에서 가져온 FragmentManager
 	public AppSectionsPagerAdapter(FragmentManager fm) {
 		super(fm);
 		// TODO Auto-generated constructor stub
@@ -29,8 +30,26 @@ public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 	 @Override
      public Fragment getItem(int i) {
 
+		 //각 fragment를 정의하는 class이다.
          Fragment fragment = new DummySectionFragment();
+         
+         //각 탭에 대한 상태 정보를 저장하기 위해 Bundle이라는 class를 사용한다.
+         //key,value 형태의 map class이다.
          Bundle args = new Bundle();
+
+         /*
+          * 이와 비슷한것으로 Intent라는 class가 있다. 
+          * 
+          * Bundle은 상태/ 등을 저장하기 위해 사용하는 객체이며,
+          * Intentㅇ는 저장이 아닌 전달하는 수단으로 사용하기 위한 객체이다. 
+          * 
+          * 여기에서는 각 탭에 대한 정보를 담기 위해서 bundle을 사용한 것이며,
+          * intent는 각 activity간에 메시지를 전달할 때 사용한다. 
+          * 
+          * 사용방법은 bundle과 유사하며,
+          * intent.putExtra("key",value)
+          
+          * */
          args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
          fragment.setArguments(args);
          return fragment;
@@ -47,20 +66,28 @@ public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
          return "Section " + (position + 1);
      }
      
+ 
+     
+     /*
+      * 각 fragment를 정의하기 위한 inner class로 fragment를 extend한다. 
+      * */
      public static class DummySectionFragment extends Fragment {
     		public static final String ARG_SECTION_NUMBER = "section_number";
-    
+    		//각 탭에 넣을 view를 정의하기 위한 함수이다. 
+    		//LayoutInflater은 xml에 정의된 레이아웃들을 view의 형태로 반환해주는 역할을 한다. 
     	    @Override
     	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
     	            Bundle savedInstanceState) {
-    	    	 
+    	    	//defaultf로	fragment_section_dummy.xml을 view로 불러온다.
     	    	View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
+    	    	
+    	    	//AppSectionsPagerAdapter에서 보낸 bundle을 가져온다.
     	    	Bundle args = getArguments();
 
-    
+    	    	// 첫번째 화면일 경우에 선언하는 화면 
     	    	if( args.getInt(ARG_SECTION_NUMBER)==1){
     	    		
-    	    		
+    	    	 //	activity_coco.xml을 view로 불러온다.
     	    	 rootView = inflater.inflate(R.layout.activity_coco,container,false);
     	    	 final EditText startDateRange = ((EditText) rootView.findViewById(R.id.startDateRange));
     	    	 final EditText endDateRange = ((EditText) rootView.findViewById(R.id.endDateRange));
@@ -89,13 +116,6 @@ public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
     	    		        
     	    		    	SimpleDateFormat sdf = setDateTimeOnAlertDialog(view,year,monthOfYear,dayOfMonth,myCalendar);
     	        	        endDateRange.setText(sdf.format(myCalendar.getTime()));
-
-    	        	        if("".equals(startDateRange.getText())){
-    	        	        	
-    	        	        }else{
-    	        	        	
-    	        	        }
-    	        	    
     	    		    }
 
     	    		};
@@ -124,9 +144,6 @@ public class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 					});
     	    		
     	    		makeExpandableListViewData(rootView);
-    	    	}else if( args.getInt(ARG_SECTION_NUMBER)==2){
-    	    		 rootView = inflater.inflate(R.layout.activity_coco,container,false);
-    	    		 
     	    	}else{
     	    		
         	        ((TextView) rootView.findViewById(android.R.id.text1)).setText(
