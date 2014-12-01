@@ -1,14 +1,15 @@
 
 import java.awt.Component;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class Main extends JFrame implements ActionListener,KeyListener,Runnable{
+public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,Runnable{
 	
 	/**
 	 * The Serial Version UID 
@@ -19,7 +20,7 @@ public class Main extends JFrame implements ActionListener,KeyListener,Runnable{
 	private int width = 600;
 	private int height = 800;
 	private boolean threadMovement = true;
-	private int row =0;
+	private int col =0;
 	/*
 	 * Layout 지정 
 	 * */
@@ -33,12 +34,15 @@ public class Main extends JFrame implements ActionListener,KeyListener,Runnable{
 		makeRightPanel();
 		add(sidePanel,"East");
 		add(gamePanel,"Center");
+
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(this);
 	}
 	
 	public void makeRightPanel(){
 		sidePanel = new SidePanel();
 		gamePanel = new GamePanel();
-		
+
 		addListenerAtSidePanel(sidePanel);
 	}
 	
@@ -83,21 +87,22 @@ public class Main extends JFrame implements ActionListener,KeyListener,Runnable{
 				
 				// 그전에 그린거 지우기 
 				if(i-1 >=0){
-					gamePanel.repaintAtPixel(i-1, row);
+					gamePanel.repaintAtPixel(i-1);
 				}
 				
 				//현재 초점에서 그리기 
-				gamePanel.paintAtPixel(i, row);
+				gamePanel.paintAtPixel(i, col);
 			
 				// 그 다음에 있는 아이들이 이미 채워져있을 때 , 쌓기 위해서 하는 것 		
-				if(i+1 <=24 &&stackStatue[i+1][row] ==true){
-					gamePanel.checkTetrisLine(i,row);
+				if(i+1 <=24 &&stackStatue[i+1][col] ==true){
+					gamePanel.setStatue(i,col);
 					break;
 				}	
 				if(i==24){
-					gamePanel.checkTetrisLine(i,row);
+					gamePanel.setStatue(i,col);
 				}
 				
+				gamePanel.chekTerisLine();
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
@@ -112,25 +117,30 @@ public class Main extends JFrame implements ActionListener,KeyListener,Runnable{
 
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public boolean dispatchKeyEvent(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if(e.getID() == KeyEvent.KEY_PRESSED){
+			if(e.getKeyCode()==37){//Left
+				if(col-1 <0){
+					col =0;
+				}else{
+					col--;
+				}
+			}else if(e.getKeyCode()==39){//Right
+				if(col+1 >15){
+					col =15;
+				}else{
+					col++;
+				}
+			}
+		}
+		return false;
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	public static void main(String[] args){
 		new Main();
 	}
+
+	
 	
 }
