@@ -17,6 +17,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 		findViewById(R.id.startAppButton).setOnClickListener(this);
 		findViewById(R.id.stopAppButton).setOnClickListener(this);
+		findViewById(R.id.test).setOnClickListener(this);
 		
 
 	}
@@ -26,8 +27,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		  
 	      if(view == R.id.startAppButton){
 	    	  startService(new Intent(this, MacroService.class));    //서비스 시작  
-	      } else{
+	      } else if((view == R.id.stopAppButton)){
 	    	  stopService(new Intent(this, MacroService.class));    //서비스 종료
+	      }else{
+	    	  System.out.println("test");
 	      }
 	          
 	    

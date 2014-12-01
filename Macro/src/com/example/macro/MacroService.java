@@ -31,6 +31,7 @@ public class MacroService extends Service implements OnClickListener,Runnable{
 	}
 	@Override
 	public void onCreate(){
+		System.out.println("onCreate");
 		super.onCreate();
 
 		inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -54,7 +55,7 @@ public class MacroService extends Service implements OnClickListener,Runnable{
 
 	@Override
 	public void onDestroy(){
-
+		System.out.println("onDestroy");
 		if(mWindowManager != null) {        //서비스 종료시 뷰 제거. *중요 : 뷰를 꼭 제거 해야함.
 			if(myView != null){
 				((WindowManager) getSystemService(WINDOW_SERVICE)).removeView(myView);
@@ -68,20 +69,17 @@ public class MacroService extends Service implements OnClickListener,Runnable{
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()){
-		case R.id.start : 
+		int id = v.getId();
+		if (id == R.id.startMacro) {
 			startMacro();
-			break;
-		case R.id.stop :
+		} else if (id == R.id.stopMacro) {
 			stopMacro();
-			break;
 		}
 	}
 	
 	public void setButtonListener(View myView){
-		Button startButton = (Button)myView.findViewById(R.id.start);
-		Button stopButton = (Button)myView.findViewById(R.id.stop);
+		Button startButton = (Button)myView.findViewById(R.id.startMacro);
+		Button stopButton = (Button)myView.findViewById(R.id.stopMacro);
 		
 		startButton.setOnClickListener(this);
 		stopButton.setOnClickListener(this);
@@ -108,8 +106,8 @@ public class MacroService extends Service implements OnClickListener,Runnable{
 			try{
 				long downTime = SystemClock.uptimeMillis();
 				long eventTime = SystemClock.uptimeMillis();
-				final MotionEvent down_event = MotionEvent.obtain(downTime, eventTime,   MotionEvent.ACTION_DOWN, 100,100, 0);
-				final MotionEvent up_event = MotionEvent.obtain(downTime, eventTime,   MotionEvent.ACTION_UP, 100, 100, 0);
+				final MotionEvent down_event = MotionEvent.obtain(downTime, eventTime,   MotionEvent.ACTION_DOWN, 100,200, 0);
+				final MotionEvent up_event = MotionEvent.obtain(downTime, eventTime,   MotionEvent.ACTION_UP, 100, 200, 0);
 				down_event.setSource(InputDevice.SOURCE_TOUCHSCREEN);		
 				up_event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
 				
@@ -135,6 +133,7 @@ public class MacroService extends Service implements OnClickListener,Runnable{
 			                             Thread.sleep(10);
 			                             inst.sendPointerSync(up_event);
 			                             Thread.sleep(200);
+			                             System.out.println("point :"+down_event.getX()+","+down_event.getY());
 			                          } catch (InterruptedException e) {
 			                             // TODO Auto-generated catch block
 			                             e.printStackTrace();

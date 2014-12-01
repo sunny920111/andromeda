@@ -49,7 +49,11 @@ public class BaseExpandableAdapter extends BaseExpandableListAdapter {
 	            View convertView, ViewGroup parent) {
 	         
 	    	 View v = convertView;
-	         
+	         //ViewHolder란, 이름 그대로 뷰들을 홀더에 꼽아놓듯이 보관하는 객체를 말한다. 
+	    	 //각각의 ROW를 그려낼 때, 그 안의 위젯들의 속성을 변경하기 위해 findViewById를 호충하는데 이것의 비용이 큰 것을 줄이기 위해 사용한다. 
+	    	 
+	    	 
+	    	 //캐시된 View가 없을 경우에는 새로 생성하고 ViewHolder를 생성한다. 
 	         if(v == null){
 	             viewHolder = new ViewHolder();
 	             v = inflater.inflate(R.layout.list_row, parent, false);
@@ -57,6 +61,7 @@ public class BaseExpandableAdapter extends BaseExpandableListAdapter {
 	            
 	             v.setTag(viewHolder);
 	         }else{
+	        	 //캐시된 View가 있을 경우에는 저장된 뷰홀더를 사용한다. 
 	             viewHolder = (ViewHolder)v.getTag();
 	         }
 

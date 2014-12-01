@@ -8,12 +8,18 @@
         android:id="@+id/startAppButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/startButton" />
+        android:text="@string/start_macro" />
 
     <Button
         android:id="@+id/stopAppButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stopButton" />
+        android:text="@string/stop_macri" />
 
+    <Button
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tset" />
+    
 </LinearLayout>

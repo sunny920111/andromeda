@@ -10,15 +10,15 @@
     android:background="@android:color/transparent" >
 
     <Button
-        android:id="@+id/stop"
+        android:id="@+id/stopMacro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/start"
-        android:layout_below="@+id/start"
+        android:layout_alignLeft="@+id/startMacro"
+        android:layout_below="@+id/startMacro"
         android:text="@string/stopButton" />
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/startMacro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
