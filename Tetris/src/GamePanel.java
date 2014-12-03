@@ -14,7 +14,7 @@ public class GamePanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int rows = 25;
-	private int cols = 16;
+	private int cols = 12;
 	private JLabel[][] pixel = new JLabel[rows][cols];
 	private Boolean[][] stackStatue = new Boolean[rows][cols];
 	private int[][] blockColor= new int[rows][cols];
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel {
 		
 		//¿­ check
 		for(int i=0; i< item.length ;i++){
-			if(col-1 >0){
+			if(col-1 >0 && row+item.length <rows){
 				if(stackStatue[row+i][col-1]){
 					leftSide = true; 
 					break;
@@ -228,7 +228,7 @@ public class GamePanel extends JPanel {
 	}
 	public void chekTerisLine(){
 		
-		int[] lines = new int[25];
+		int[] lines = new int[rows];
 		boolean flag = false;
 		int k=0; 
 		for(int i=0; i<rows ; i++){

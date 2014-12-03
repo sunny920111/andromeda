@@ -21,7 +21,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private SidePanel sidePanel;
 	private GamePanel gamePanel; 
 	private TetrisItem item = new TetrisItem();
-	private int width = 600;
+	private int width = 500;
 	private int height = 800;
 	private boolean threadMovement = true;
 	private int col =0;
@@ -31,7 +31,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private boolean[][][] component;
 	private int randomNum;
 	private ArrayList<boolean[][][]> allItem;
-	private int speed = 150;
+	private int speed = 200;
 
 	/*
 	 * Layout ÁöÁ¤ 
@@ -147,7 +147,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		// TODO Auto-generated method stub
 
 		while(threadMovement){
-			col=7;
+			col=5;
 			component =getRandomItem();
 			for(int i=0; i< 25 ;i++){
 				row=i;
