@@ -132,7 +132,6 @@ public class GamePanel extends JPanel {
 			
 			
 		}
-	
 		if(keyCode == 37){
 			return leftSide;
 		}else if(keyCode == 39){
