@@ -86,7 +86,7 @@ public class GamePanel extends JPanel {
 		//pixel[row][col].setBackground(Color.lightGray);
 		for(int i=0; i< item.length;i++){
 			for(int j=0; j< item[i].length;j++){
-				if(row+i < rows ){
+				if(row+i < rows && col+j <cols){
 					if(item[i][j]){
 						pixel[row+i][col+j].setBackground(getColor(color));
 					}
@@ -196,7 +196,6 @@ public class GamePanel extends JPanel {
 
 		if(checkBottomSide(row,col,item)){
 			for(int i=0; i<item.length;i++){
-				line++;
 				for(int j=0; j<item[i].length;j++){
 					if(!stackStatue[row+i][col+j]){
 						stackStatue[row+i][col+j] = item[i][j];
@@ -207,7 +206,22 @@ public class GamePanel extends JPanel {
 		}
 	}
 	public boolean checkLineNum(boolean[][] item){
-		if(line+item.length>rows){
+		
+		boolean flag = false;
+		for(int i=0; i<rows;i++){
+			for(int j=0; j< cols ;j++){
+				if(stackStatue[i][j]){
+					line = rows-i;
+					flag = true;
+					break;
+				}
+			}
+			if(flag){
+				break;
+			}
+		}
+		
+		if(line+item.length >rows){
 			return false;
 		}
 		return true;
