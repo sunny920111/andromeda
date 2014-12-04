@@ -1,5 +1,6 @@
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private int width = 500;
 	private int height = 800;
 	private boolean threadMovement = true;
+	private boolean suspended = false;
 	private int col =0;
 	private int row = 0;
 	private int ItemStatue = 0;
@@ -31,7 +33,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private boolean[][][] component;
 	private int randomNum;
 	private ArrayList<boolean[][][]> allItem;
-	private int speed = 200;
+	private int speed = 100;
 
 	/*
 	 * Layout 지정 
@@ -65,6 +67,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		sidePanel = new SidePanel();
 		gamePanel = new GamePanel();
 
+		sidePanel.setPreferredSize(new Dimension(100,800));
 		addListenerAtSidePanel(sidePanel);
 	}
 	
@@ -84,14 +87,13 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		String id = ((JButton)e.getSource()).getText();
 		if("START".equals(id)){
 			startGame();
-			//((JButton)e.getSource()).setText("PAUSE");
+			((JButton)e.getSource()).setText("PAUSE");
 		}else if("STOP".equals(id)){
 			stopGame();
-			((JButton)sidePanel.getComponent(0)).setText("START");
 		}else if("PAUSE".equals(id)){
-			((JButton)e.getSource()).setText("RESTART");
+			((JButton)e.getSource()).setText("RESUME");
 			pauseGame();
-		}else if("RESTART".equals(id)){
+		}else if("RESUME".equals(id)){
 			((JButton)e.getSource()).setText("PAUSE");
 			resumeGame();
 		}
@@ -114,11 +116,11 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	}
 	
 	public void pauseGame(){
-
+		suspended = true;
 	}
 	
 	public void resumeGame(){
-
+		suspended = false;
 	}
 	
 	public void stopGame(){
@@ -131,7 +133,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		}else{
 			JOptionPane.showMessageDialog(null, "Please, Start");
 		}
-
+		((JButton)sidePanel.getComponent(0)).setText("START");
 	}
 	
 	public boolean[][][] getRandomItem(){
@@ -147,10 +149,12 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		// TODO Auto-generated method stub
 
 		while(threadMovement){
-			col=5;
+			col = 5;
+			speed = 150;
 			component =getRandomItem();
-			for(int i=0; i< 25 ;i++){
-				row=i;
+			for(int i = 0; i < 25; i++){
+				row=i;	
+				
 				if(!gamePanel.checkLineNum(component[ItemStatue%4])){
 					String[] buttons = {"CONFIRM"};
 					int result = JOptionPane.showOptionDialog(null, "GAME OVER","GAME OVER"
@@ -168,6 +172,10 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 				gamePanel.paintAtPixel(i, col,component[ItemStatue%4],randomNum);	
 				
 
+				while(suspended){
+					//infinite loop
+					System.out.println("suspended");
+				}			
 				// 그 다음에 있는 아이들이 이미 채워져있을 때 , 쌓기 위해서 하는 것 		
 				gamePanel.setStatue(i, col, component[ItemStatue%4],randomNum);
 				
@@ -206,19 +214,24 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 					col++;
 				}
 			}else if(e.getKeyCode()==38){
-				ItemStatue++;
-				if(!gamePanel.checkRotateItem(row, col, component[ItemStatue%4])){
-					ItemStatue--;
+				
+				if(gamePanel.checkRotateItem(row, col, component[(ItemStatue+1)%4])){
+					ItemStatue++;
 				}
+				
 			}else if(e.getKeyCode()==40 ){
 				speed =50;
+			}else if(e.getKeyCode()==32){//space
+				speed =5;
 			}
-		
-		}else if(e.getID()  == KeyEvent.KEY_RELEASED){
-			if(e.getKeyCode()==40 ){
-				speed =150;
+
+		}else if(e.getID() == KeyEvent.KEY_RELEASED){
+			if(e.getKeyCode()==40 ||e.getKeyCode()==38){
+				speed =100;
 			}
 		}
+
+		//c ==67
 		return false;
 	}
 	

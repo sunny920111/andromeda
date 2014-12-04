@@ -83,7 +83,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	public void paintAtPixel(int row,int col,boolean[][] item ,int color){
-		//pixel[row][col].setBackground(Color.lightGray);
+
 		for(int i=0; i< item.length;i++){
 			for(int j=0; j< item[i].length;j++){
 				if(row+i < rows && col+j <cols){
@@ -117,7 +117,7 @@ public class GamePanel extends JPanel {
 				break;
 			}
 
-			if(col+item[i].length < cols){
+			if(col+item[i].length < cols && row+item.length <rows){
 				if(stackStatue[row+i][col+item[i].length]){
 					rightSide = true; 
 					break;
@@ -143,10 +143,18 @@ public class GamePanel extends JPanel {
 	public boolean checkRotateItem(int row,int col,boolean[][] item){
 		boolean result = false;
 		
-		if(item[0].length+col <cols){
+		if(item[0].length+col-1 <cols && item.length+row-1 <rows){
 			result = true;
+			
+			for(int i=row+item.length-1; i>=0;i--){
+				for(int j=col+item[0].length -1 ; j>=0 ;j--){
+					if(stackStatue[i][j]){
+						result = false;
+						break;
+					}
+				}
+			}
 		}
-		
 		return result; 
 	}
 	
