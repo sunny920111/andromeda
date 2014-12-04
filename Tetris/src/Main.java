@@ -33,7 +33,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private boolean[][][] component;
 	private int randomNum;
 	private ArrayList<boolean[][][]> allItem;
-	private int speed = 100;
+	private int speed = 200;
 
 	/*
 	 * Layout ÁöÁ¤ 
@@ -126,6 +126,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	public void stopGame(){
 		
 		if(game != null){
+			((JButton)sidePanel.getComponent(0)).setText("START");
 			threadMovement= false;
 			gamePanel.clearStackStatue();
 			gamePanel.repaint();
@@ -133,7 +134,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		}else{
 			JOptionPane.showMessageDialog(null, "Please, Start");
 		}
-		((JButton)sidePanel.getComponent(0)).setText("START");
+		
 	}
 	
 	public boolean[][][] getRandomItem(){
@@ -227,7 +228,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 
 		}else if(e.getID() == KeyEvent.KEY_RELEASED){
 			if(e.getKeyCode()==40 ||e.getKeyCode()==38){
-				speed =100;
+				speed =200;
 			}
 		}
 
