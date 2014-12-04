@@ -218,16 +218,22 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		// TODO Auto-generated method stub
 		if(e.getID() == KeyEvent.KEY_PRESSED){
 			if(e.getKeyCode()==37){//Left
-				if(!gamePanel.checkLeftRightSide(row, col, component[ItemStatue%4],37)){
-						col--;
+				
+				if(!gamePanel.checkLeftRightSide(row, col, component[ItemStatue%4],37)
+						&&!gamePanel.checkBottomSide(row, col, component[ItemStatue%4])){
+					col--;
 				}
 			}else if(e.getKeyCode()==39){//Right
-				if(!gamePanel.checkLeftRightSide(row, col, component[ItemStatue%4],39)){
+				if(!gamePanel.checkLeftRightSide(row, col, component[ItemStatue%4],39)
+						&&!gamePanel.checkBottomSide(row, col, component[ItemStatue%4])){
 					col++;
 				}
 			}else if(e.getKeyCode()==38){
-				
-				if(gamePanel.checkRotateItem(row, col, component[(ItemStatue+1)%4])){
+
+				if(gamePanel.checkRotateItem(row, col, component[(ItemStatue+1)%4])
+						&&!gamePanel.checkLeftRightSide(row, col, component[(ItemStatue+1)%4],38)
+						&&!gamePanel.checkBottomSide(row, col, component[(ItemStatue+1)%4])){
+		
 					ItemStatue++;
 				}
 				

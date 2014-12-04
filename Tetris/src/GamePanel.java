@@ -102,49 +102,75 @@ public class GamePanel extends JPanel {
 
 		boolean leftSide = false; 
 		boolean rightSide = false;
-		
+	
 		//¿­ check
-		for(int i=0; i< item.length ;i++){
+	
+		for(int i=0; i<item.length;i++){
 			if(col-1 >0 && row+item.length <rows){
-				if(stackStatue[row+i][col-1]
-						||stackStatue[row+i][col]
-								||stackStatue[row+item.length][col-1]){
-					leftSide = true; 
-					break;
+				if(item[i][0]){
+					if(stackStatue[row+i][col-1] 
+							||stackStatue[row+item.length][col-1]){
+						leftSide = true; 
+						break;
+					}
 				}
 			}else if(col==0){
 				leftSide = true; 
 				break;
 			}
-
+			
+			
 			if(col+item[i].length < cols && row+item.length <rows){
-				if(stackStatue[row+i][col+item[i].length]
-						||stackStatue[row+i][col+item[i].length-1]
-								||stackStatue[row+item.length][col+item[i].length]){
-					rightSide = true; 
-					break;
+				if(item[i][item[0].length-1]){
+					if(stackStatue[i][col+item[0].length]||stackStatue[row+item.length][col+item[0].length]){
+						rightSide = true; 
+						break;
+					}
 				}
 			}else if(col+item[i].length==cols){
 				rightSide = true; 
 				break;
 			}
 			
+		}
+		
+		
+		for(int i=0; i<item[0].length;i++){
+				if(item[item.length-1][i]){
+					if(row+item.length< rows && col+i+1 <cols){
+						if(stackStatue[row+item.length][col+i+1]){
+							rightSide = true; 
+							break;
+						}
+					}
+					
+					if(row+item.length< rows && col+i-1 >0){
+						if(stackStatue[row+item.length-1][col+i-1]){
+							leftSide = true; 
+							break;
+						}
+					}
+
+				}
 			
 		}
+	
+		
 		if(keyCode == 37){
 			return leftSide;
 		}else if(keyCode == 39){
 			return rightSide;
 		}
+		
 		return (leftSide||rightSide);
 	}
 	
+	
+	
 	public boolean checkRotateItem(int row,int col,boolean[][] item){
-		boolean result = false;
+		boolean result = true;
 		
-		if(item[0].length+col-1 <cols && item.length+row-1 <rows){
-			result = true;
-			
+		if(item[0].length+col <=cols && item.length+row <=rows){
 			for(int i=row+item.length-1; i>=0;i--){
 				for(int j=col+item[0].length -1 ; j>=0 ;j--){
 					if(stackStatue[i][j]){
@@ -153,6 +179,8 @@ public class GamePanel extends JPanel {
 					}
 				}
 			}
+		}else{
+			result = false;
 		}
 		return result; 
 	}
@@ -171,8 +199,8 @@ public class GamePanel extends JPanel {
 							result = true;
 							break;
 						}
-						
 					}
+					
 				}else if(row+item.length==rows ){
 					result =true;
 					
