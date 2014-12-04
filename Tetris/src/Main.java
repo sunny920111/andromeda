@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;
@@ -34,6 +35,9 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 	private int randomNum;
 	private ArrayList<boolean[][][]> allItem;
 	private int speed = 200;
+	private boolean[][][] hold;
+	private int holdRandomNum =0;
+	private boolean holdFlag =false;
 
 	/*
 	 * Layout 지정 
@@ -111,6 +115,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 			}
 		}
 		threadMovement= true;
+		suspended= false;
 		gamePanel.setLine(0);
 		
 	}
@@ -152,6 +157,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 		while(threadMovement){
 			col = 5;
 			speed = 150;
+			holdFlag =false;
 			component =getRandomItem();
 			for(int i = 0; i < 25; i++){
 				row=i;	
@@ -173,10 +179,14 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 				gamePanel.paintAtPixel(i, col,component[ItemStatue%4],randomNum);	
 				
 
-				while(suspended){
+				while(suspended){ //일시중지
 					//infinite loop
 					System.out.println("suspended");
 				}			
+
+				if(holdFlag){
+					break;
+				}
 				// 그 다음에 있는 아이들이 이미 채워져있을 때 , 쌓기 위해서 하는 것 		
 				gamePanel.setStatue(i, col, component[ItemStatue%4],randomNum);
 				
@@ -224,6 +234,38 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 				speed =50;
 			}else if(e.getKeyCode()==32){//space
 				speed =5;
+			}else if(e.getKeyCode() ==67){
+				
+				boolean[][][] temp;
+				int tempColor; 
+				Color color = null;
+				if(hold== null){
+					hold =component;
+					holdRandomNum = randomNum;
+					color= gamePanel.getColor(randomNum);
+					holdFlag = true;
+				}else{
+					
+					if(!gamePanel.checkLeftRightSide(row, col, hold[ItemStatue%4],67)
+							&&gamePanel.checkRotateItem(row, col, hold[(ItemStatue+1)%4])){
+					
+						temp = component;
+						component = hold;
+						hold = temp;
+						
+						tempColor = randomNum;
+						randomNum = holdRandomNum;
+						holdRandomNum = tempColor;
+						
+						color= gamePanel.getColor(holdRandomNum);
+					}else{
+						color = gamePanel.getColor(holdRandomNum);
+					}
+					
+				}
+				
+				sidePanel.repaint();
+				sidePanel.drawQueue(hold[0], color);
 			}
 
 		}else if(e.getID() == KeyEvent.KEY_RELEASED){
@@ -232,7 +274,6 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 			}
 		}
 
-		//c ==67
 		return false;
 	}
 	

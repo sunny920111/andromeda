@@ -20,6 +20,7 @@ public class GamePanel extends JPanel {
 	private int[][] blockColor= new int[rows][cols];
 	private int line=0; 
 	
+	
 	public Boolean[][] getStackStatue() {
 		return stackStatue;
 	}
@@ -105,10 +106,9 @@ public class GamePanel extends JPanel {
 		//¿­ check
 		for(int i=0; i< item.length ;i++){
 			if(col-1 >0 && row+item.length <rows){
-				if(stackStatue[row+i][col-1]){
-					leftSide = true; 
-					break;
-				}else if(stackStatue[row+item.length][col-1]){
+				if(stackStatue[row+i][col-1]
+						||stackStatue[row+i][col]
+								||stackStatue[row+item.length][col-1]){
 					leftSide = true; 
 					break;
 				}
@@ -118,10 +118,9 @@ public class GamePanel extends JPanel {
 			}
 
 			if(col+item[i].length < cols && row+item.length <rows){
-				if(stackStatue[row+i][col+item[i].length]){
-					rightSide = true; 
-					break;
-				}else if(stackStatue[row+item.length][col+item[i].length]){
+				if(stackStatue[row+i][col+item[i].length]
+						||stackStatue[row+i][col+item[i].length-1]
+								||stackStatue[row+item.length][col+item[i].length]){
 					rightSide = true; 
 					break;
 				}
