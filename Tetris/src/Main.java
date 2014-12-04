@@ -135,6 +135,7 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 			threadMovement= false;
 			gamePanel.clearStackStatue();
 			gamePanel.repaint();
+			sidePanel.repaint();
 			game.stop();
 		}else{
 			JOptionPane.showMessageDialog(null, "Please, Start");
