@@ -23,7 +23,7 @@ public class Sender extends Thread {
 		
 		while(out != null){
 			try {
-				out.writeUTF("[CLIENT] :"+s.nextLine());
+				out.writeUTF("[SERVER] :"+s.nextLine());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
