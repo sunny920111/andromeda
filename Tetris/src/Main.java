@@ -254,7 +254,8 @@ public class Main extends JFrame implements ActionListener,KeyEventDispatcher ,R
 				}else{
 					
 					if(!gamePanel.checkLeftRightSide(row, col, hold[ItemStatue%4],67)
-							&&gamePanel.checkRotateItem(row, col, hold[(ItemStatue+1)%4])){
+							&&gamePanel.checkRotateItem(row, col, hold[ItemStatue%4])
+							&&!gamePanel.checkBottomSide(row, col, hold[ItemStatue%4])){
 					
 						temp = component;
 						component = hold;
