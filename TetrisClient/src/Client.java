@@ -8,9 +8,6 @@ public class Client {
 	            Socket socket = new Socket(serverIp, 9000);
 
 	            System.out.println("Successfully Connected With Server.");
-	            
-	            System.out.println("test");
-	            
 	    		Sender sender = new Sender(socket);
 	 	        Receiver receiver = new Receiver(socket);
 	 	             
