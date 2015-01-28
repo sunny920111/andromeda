@@ -2,9 +2,7 @@ package controller;
 
 import java.awt.Color;
 
-import model.CommonValue;
 import model.DrawValue;
-import model.TetrisItem;
 
 public class DrawGamePanelController {
 
